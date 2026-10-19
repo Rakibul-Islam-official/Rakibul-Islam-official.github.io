@@ -2,7 +2,7 @@
 
 The official portfolio of **Rakibul Islam** (Movie Explainer). Film explanations on YouTube, complete websites, software, games, and poetry.
 
-🔗 **Live Experience:** [https://riojuincy.github.io](https://riojuincy.github.io)
+🔗 **Live Experience:** [https://riojuincy.github.io](https://Rakibul-Islam-official.github.io)
 
 ### ✨ Features:
 - 🎬 Film Explanations & YouTube integration
