@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rakibul Islam — Movie Explainer</title>
+  <meta name="description" content="Rakibul Islam explains films on YouTube as Movie Explainer, and builds websites, software, and games. Also writes poetry." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content="Rakibul Islam — Movie Explainer" />
+  <meta property="og:description" content="Film explanations on YouTube. Websites, software, games, and poetry." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,620;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=55" />
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var isMobile = window.matchMedia("(max-width: 768px)").matches || /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      var key = isMobile ? "theme_mobile" : "theme_desktop";
+      var saved = localStorage.getItem(key);
+      var isNight = saved === "night";
+      if (isNight) {
+        document.documentElement.setAttribute("data-theme", "night");
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", "#0b0e18");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="enter-overlay" class="enter-overlay">
+    <div class="enter-backdrop"></div>
+    <div class="enter-card">
+      <div class="enter-photo-wrap">
+        <div class="enter-pulse-wave" aria-hidden="true"></div>
+        <div class="enter-crown-flare" aria-hidden="true"></div>
+        <div class="enter-ring-outer" aria-hidden="true"></div>
+        <div class="enter-ring-counter" aria-hidden="true"></div>
+        <div class="enter-orbit-satellite" aria-hidden="true"><span class="sat-dot"></span></div>
+        <div class="enter-orbit-satellite rev" aria-hidden="true"><span class="sat-dot"></span></div>
+        <div class="enter-photo-glow" aria-hidden="true"></div>
+        <div class="enter-photo-inner">
+          <img src="enter.png" alt="Rakibul Islam" class="enter-photo" width="300" height="300" />
+        </div>
+      </div>
+      <div class="enter-content">
+        <div class="enter-badge">
+          <span class="enter-badge-dot" aria-hidden="true"></span>
+          <svg class="enter-badge-icon" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+            <path fill="currentColor" d="M12 2l2.4 6.8L21 11l-5.3 4.4 1.7 7L12 18.6 6.6 22.4l1.7-7L3 11l6.6-2.2z"/>
+          </svg>
+          <span>Movie Explainer</span>
+        </div>
+        <h1 class="enter-name">Rakibul Islam</h1>
+        <p class="enter-desc">Film explanations ✦ Developer ✦ Poetry</p>
+      </div>
+      <button id="enter-btn" class="enter-btn" type="button">
+        <svg class="enter-btn-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+        <span class="enter-btn-text">Enter Experience</span>
+        <span class="enter-btn-shine" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <a class="skip" href="#about">Skip to content</a>
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <div class="meteors" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="sky-moon" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="logo" href="#top">Rio</a>
+    <nav id="menu" class="nav-links" aria-label="Primary">
+      <a href="#links">YouTube</a>
+      <a href="#work">Work</a>
+      <a href="#writing">Writing</a>
+      <a href="#stack">Stack</a>
+      <a href="#support">Support</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="player" id="player">
+      <button class="play" id="play" type="button" aria-label="Play">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path id="play-icon" d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+      </button>
+      <button class="skip-btn" id="next-song" type="button" aria-label="Next song" title="Next song">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg>
+      </button>
+      <div class="player-copy">
+        <strong id="track-name">Song 1</strong>
+        <span id="ptime">0:00</span>
+      </div>
+      <div class="player-eq" aria-hidden="true"><i></i><i></i><i></i></div>
+      <label class="seek">
+        <span>Position</span>
+        <input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Song position" />
+      </label>
+      <label class="vol">
+        <span>Soft</span>
+        <input id="volume" type="range" min="0" max="100" value="65" aria-label="Volume" />
+      </label>
+      <audio id="song" preload="auto" playsinline></audio>
+    </div>
+    <button class="theme-btn" id="theme" type="button" aria-pressed="false" aria-label="Night">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.1 3.1a8.4 8.4 0 1 0 5.8 13.6A7.2 7.2 0 1 1 15.1 3.1z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1 17.3 6.7M6.7 17.3 5.1 18.9"/></g></svg>
+    </button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-panel reveal">
+        <div class="hero-side">
+          <div class="portrait-orbit" id="orbit">
+            <div class="viz" id="viz" aria-hidden="true"></div>
+            <div class="portrait">
+              <img src="rio.png" alt="Portrait of Rakibul Islam" width="800" height="800" />
+            </div>
+          </div>
+          <div class="yt-row">
+            <span class="moon" aria-hidden="true"></span>
+            <a class="btn btn-primary btn-yt" href="https://www.youtube.com/@YourbdExplainer" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" style="margin-right:7px;flex:none;"><path fill="currentColor" d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42A2.5 2.5 0 0 0 2.42 7.19C2 8.75 2 12 2 12s0 3.25.42 4.81a2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5 3-5 3z"/></svg>
+              <span>Watch on YouTube</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-copy">
+          <h1 aria-label="Rakibul Islam"><span class="first">Rakibul</span><span class="name-dot" aria-hidden="true"></span><span class="last">Islam</span></h1>
+          <ul class="roles">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 9.5v5l4.2-2.5z" fill="currentColor"/></svg>
+              Explainer
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8 4 12l4 4M16 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Developer
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c2-6 4-8 9-9l2 2c-1 5-3 7-9 9l-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 8l2 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              Writer
+            </li>
+          </ul>
+          <p class="role">Film explanations, from the first frame to the last. The channel is Movie Explainer.</p>
+          <div class="actions">
+            <a class="btn btn-mail" href="#contact">Write to me</a>
+            <a class="btn btn-read" href="#writing">Read the writing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="links">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>YouTube</p>
+          <h2>The channel comes first</h2>
+          <p class="lead">Movie Explainer is where the films are told, scene by scene, until the ending makes sense. The other places sit beside the channel. Step into any one of them.</p>
+        </div>
+        <div class="socials">
+          <a class="social yt reveal" href="https://www.youtube.com/@YourbdExplainer" target="_blank" rel="noopener noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="6" width="18" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><g class="eq"><rect x="8" y="9" width="1.7" height="6" rx="0.6" fill="currentColor"/><rect x="11.15" y="8" width="1.7" height="8" rx="0.6" fill="currentColor"/><rect x="14.3" y="10" width="1.7" height="4" rx="0.6" fill="currentColor"/></g></svg>
+            </span>
+            <span class="social-copy">
+              <strong>YouTube</strong>
+              <em>Full film explanations, told scene by scene.</em>
+            </span>
+          </a>
+          <a class="social fb reveal" href="https://www.facebook.com/iftekhar.eshan.2024" target="_blank" rel="noopener noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.2l.8-3H13V9c0-.6.4-1 1-1z" fill="currentColor"/></svg>
+            </span>
+            <span class="social-copy">
+              <strong>Facebook</strong>
+              <em>Follow along and stay in touch.</em>
+            </span>
+          </a>
+          <a class="social ig reveal" href="https://www.instagram.com/riojuincy/" target="_blank" rel="noopener noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.1" cy="6.9" r=".9" fill="currentColor"/></svg>
+            </span>
+            <span class="social-copy">
+              <strong>Instagram</strong>
+              <em>Stills, stories, and quiet notes.</em>
+            </span>
+          </a>
+          <a class="social x reveal" href="https://x.com/riojuincy" target="_blank" rel="noopener noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6.2 6.2l11.6 11.6M17.8 6.2 6.2 17.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="social-copy">
+              <strong>X</strong>
+              <em>Short notes and updates.</em>
+            </span>
+          </a>
+          <a class="social dc reveal" href="https://discord.com/users/riojuincy" target="_blank" rel="noopener noreferrer">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M16.6 6.4A12 12 0 0 0 13.5 5l-.4.7a11 11 0 0 1 3 .9 10 10 0 0 0-8.2 0 11 11 0 0 1 3-.9L10.5 5a12 12 0 0 0-3.1 1.4C5.4 9.2 4.8 12 5.1 14.7a12 12 0 0 0 3.8 1.9l.5-.8a8 8 0 0 1-1.2-.6l.3-.2a9 9 0 0 0 7 0l.3.2a8 8 0 0 1-1.2.6l.5.8a12 12 0 0 0 3.8-1.9c.4-3.1-.5-5.9-2.3-8.3ZM9.8 13.4c-.7 0-1.2-.6-1.2-1.4s.5-1.4 1.2-1.4 1.3.6 1.3 1.4-.6 1.4-1.3 1.4Zm4.4 0c-.7 0-1.2-.6-1.2-1.4s.5-1.4 1.2-1.4 1.3.6 1.3 1.4-.6 1.4-1.3 1.4Z"/></svg>
+            </span>
+            <span class="social-copy">
+              <strong>Discord</strong>
+              <em>A place to talk directly.</em>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap split">
+        <div class="reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>About</p>
+          <h2>A creator who explains, builds, and writes</h2>
+          <p class="lead">My name is Rakibul Islam. The work people come for is the channel: Movie Explainer. I sit with a film long enough to know why a scene is there, then I tell that reason in a straight line. A good explanation does not rush the ending, and it does not hide the turn that makes the story matter.</p>
+          <p class="lead">Away from the channel I design complete websites, write software, and make games in C, C++, C#, and Python. I also write poetry, make graphics, edit photographs, and edit video. A page, a picture, and a cut are the same kind of problem: what stays, and what can be left out.</p>
+        </div>
+        <aside class="note reveal" style="--d: 0.12s">
+          <p class="mark" aria-hidden="true">“</p>
+          <p>A film, a site, a poem. Each one needs a clean line.</p>
+          <span>Rakibul Islam</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Work</p>
+          <h2>What I make</h2>
+          <p class="lead">Each kind of work has the same standard. If it has my name on it, it has been finished with care, on a phone and on a large screen alike.</p>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <span class="num">01</span>
+            <h3>Film explanations</h3>
+            <p>This is the profession. On YouTube I am Your BD Explainer. I walk through a film so the plot, the motive, and the last scene land in the right order. The point is clarity: you should leave knowing what the story was doing.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.08s">
+            <span class="num">02</span>
+            <h3>Websites</h3>
+            <p>Web design and the full build. I shape the pages, the type, the color, and the words a visitor actually reads. A site should feel calm in the hand and complete on a desk, with nothing left half-finished.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.16s">
+            <span class="num">03</span>
+            <h3>Software and games</h3>
+            <p>Programs and games written in C, C++, C#, and Python. I start from the problem, then choose the structure that can carry it. Speed matters, and so does a design another person can read six months later.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.24s">
+            <span class="num">04</span>
+            <h3>Poetry</h3>
+            <p>I write poems. The line has to be exact, the image has to be seen, and the last sentence has to earn its place. Poetry is not a side note. It is part of how I make everything else.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.08s">
+            <span class="num">05</span>
+            <h3>Graphics</h3>
+            <p>Titles, covers, and the pictures that sit beside a film or a page. Shape, color, and type have to agree, so the image can be read at a glance and still feel finished up close.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.16s">
+            <span class="num">06</span>
+            <h3>Photo editing</h3>
+            <p>I edit photographs. Light, crop, and color are there to make the picture clearer, not louder. A still should look calm in the hand and complete on a large screen.</p>
+          </article>
+          <article class="card reveal" style="--d: 0.24s">
+            <span class="num">07</span>
+            <h3>Video editing</h3>
+            <p>I edit video. The cut, the pace, and the picture itself. A scene should move when it needs to move, and hold when the frame is already saying enough.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="writing">
+      <div class="wrap reading">
+        <div class="reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Writing</p>
+          <h2>Poems, and the words on a page</h2>
+          <p class="lead">I write poetry, and I write the language that lives on a website. Both ask for the same ear. A sentence should be plain enough to trust and shaped enough to remember. I cut until the line sounds like speech, then I leave the one detail that makes it specific.</p>
+          <p class="lead">A poem, for me, begins with something seen: a room, a road, a face in a dark screen. I do not decorate it. I stay with it until the feeling has a shape. The same habit helps a film explanation. If I cannot say the scene in one clean paragraph, I do not understand it yet.</p>
+          <p class="lead">When I write for a site, the reader should never feel lost. Headings tell the truth. Buttons say what they do. The longer passages, like this one, are there so you can slow down and actually read. That is the courtesy I want from a page, and the courtesy I try to give.</p>
+        </div>
+        <aside class="note reveal" style="--d: 0.12s">
+          <p class="mark" aria-hidden="true">“</p>
+          <p>Say it plainly. Then let the line keep its light.</p>
+          <span>Poetry · Sites</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="stack">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Stack</p>
+          <h2>What I know</h2>
+          <p class="lead">The languages and the design work I use when a film explanation is not the thing being built.</p>
+        </div>
+        <ul class="langs">
+          <li class="reveal"><strong>C</strong><span>The foundation. How a program is put together before it is allowed to grow.</span></li>
+          <li class="reveal" style="--d: 0.06s"><strong>C++</strong><span>Software and games that need speed, control, and a structure you can trust.</span></li>
+          <li class="reveal" style="--d: 0.12s"><strong>C#</strong><span>Applications and games with a clear structure, built on the same discipline as C and C++.</span></li>
+          <li class="reveal" style="--d: 0.18s"><strong>Python</strong><span>Tools, scripts, and the quiet logic that supports a larger piece of work.</span></li>
+          <li class="reveal" style="--d: 0.24s"><strong>Web design</strong><span>HTML, CSS, and JavaScript for complete websites, from the first layout to the last line of type.</span></li>
+          <li class="reveal"><strong>Graphics</strong><span>Covers, titles, and pictures made so the idea is clear before a word is read.</span></li>
+          <li class="reveal" style="--d: 0.06s"><strong>Photo editing</strong><span>Light, crop, and color, kept clear so the photograph stays honest.</span></li>
+          <li class="reveal" style="--d: 0.12s"><strong>Video editing</strong><span>Pace and picture, cut so a scene is easy to follow from start to end.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section tight">
+      <div class="wrap">
+        <figure class="quote reveal">
+          <blockquote>A good explanation, a good program, and a good poem all depend on structure.</blockquote>
+          <figcaption>Rakibul Islam</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Support</p>
+          <h2 class="coffee">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h10v6.2a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V8z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M16 9.2h1.4a2.4 2.4 0 0 1 0 4.8H16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="steam s1" d="M8.2 4.2c.5.8.5 1.4 0 2.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="steam s2" d="M11.2 4.2c.5.8.5 1.4 0 2.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Buy me a coffee
+          </h2>
+          <p class="lead">If a film, a page, or a poem was worth your time, a coffee is a kind way to say so.</p>
+        </div>
+        <div class="wallets">
+          <article class="wallet reveal" data-coin="btc">
+            <span class="w-ico btc" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M14.2 11.4c.9-.4 1.5-1.2 1.4-2.3-.2-1.6-1.6-2.1-3.3-2.3V5.2h-1.4v1.5h-1.1V5.2H8.4v1.6H6.8v1.4h1.1c.2 0 .3.1.3.3v7c0 .2-.1.3-.3.3H6.8v1.4h1.6v1.6h1.4v-1.6h1.1v1.6h1.4v-1.7c2 0 3.4-.7 3.6-2.4.2-1.2-.4-2-1.7-2.3zM11 8.4c.9 0 1.6.2 1.7.9.1.6-.3.9-1.2.9H10V8.4h1zm1.5 5.4c0 .7-.6 1-1.7 1H10v-2h1.8c1.1 0 1.7.3 1.7 1z"/></svg>
+            </span>
+            <div class="w-copy">
+              <strong>Bitcoin <span class="net">BTC</span></strong>
+              <code class="addr">1PGERNK8LhASLTWBkzwKDMZGMP2ZmybFUf</code>
+            </div>
+            <button class="copy" type="button" data-coin="btc">Copy</button>
+          </article>
+          <article class="wallet reveal" data-coin="eth" style="--d: 0.08s">
+            <span class="w-ico eth" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3.2 6.6 12.2 12 15.4l5.4-3.2L12 3.2zm0 13.2-5.4-3.2L12 20.8l5.4-7.6L12 16.4z"/></svg>
+            </span>
+            <div class="w-copy">
+              <strong>Ethereum <span class="net eth-net">ERC20</span></strong>
+              <code class="addr">0x3f70bcf0ed166222545cc324727ac8495ef00655</code>
+            </div>
+            <button class="copy" type="button" data-coin="eth">Copy</button>
+          </article>
+          <article class="wallet reveal" data-coin="usdt" style="--d: 0.16s">
+            <span class="w-ico usdt" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 4.2c4.2 0 7.4.7 7.8 1.6-.4.9-3.6 1.6-7.8 1.6S4.6 6.7 4.2 5.8C4.6 4.9 7.8 4.2 12 4.2zM5.2 7.4v1.5c.5.7 3.2 1.3 6.8 1.3s6.3-.6 6.8-1.3V7.4c-.6.6-3.4 1.1-6.8 1.1s-6.2-.5-6.8-1.1zm0 3.1v1.6c.5.7 3.2 1.3 6.8 1.3s6.3-.6 6.8-1.3v-1.6c-.6.6-3.4 1.1-6.8 1.1s-6.2-.5-6.8-1.1zm0 3.2V18c.5.8 3.2 1.4 6.8 1.4s6.3-.6 6.8-1.4v-4.3c-.6.6-3.4 1.1-6.8 1.1s-6.2-.5-6.8-1.1z"/></svg>
+            </span>
+            <div class="w-copy">
+              <strong>Tether <span class="net usdt-net">TRC20</span></strong>
+              <code class="addr">TBTi9BeBNoD17FTXeL2ba2sKdXpdLNucPb</code>
+            </div>
+            <button class="copy" type="button" data-coin="usdt">Copy</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap split">
+        <div class="reveal">
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Contact</p>
+          <h2>Write to me</h2>
+          <p class="lead">A film to explain, a website to build, a game, or a poem. Write the note here. It is sent to Rakibul Islam at riojuincy@gmail.com. Add your email if you would like a reply.</p>
+        </div>
+        <div id="sent-note" class="form-card sent" hidden>
+          <p class="kicker"><span class="moon moon-sm" aria-hidden="true"></span>Message Sent</p>
+          <h3>Thank You for Your Message!</h3>
+          <p>Your note has been delivered to Rakibul Islam. Thank you for reaching out—I appreciate your message and will reply soon.</p>
+          <button id="sent-again" class="btn btn-read" type="button">Send another message</button>
+        </div>
+        <form id="contact-form" class="form-card reveal" style="--d: 0.1s" action="https://formsubmit.co/riojuincy@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="A note for Rakibul Islam" />
+          <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honey" />
+          <label>
+            <span>Name</span>
+            <input name="name" autocomplete="name" required maxlength="80" placeholder="Your name" />
+          </label>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" maxlength="120" placeholder="So Rakibul Islam can reply" />
+          </label>
+          <label>
+            <span>Note</span>
+            <textarea name="message" required maxlength="800" rows="5" placeholder="A video, a website, a game, or a piece of writing"></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Send the note</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="foot-copy">
+        <strong>Rakibul Islam</strong>
+        <p>Film explanations on YouTube as Movie Explainer. Websites, software, games, poetry, graphics, photo editing, and video.</p>
+        <span>© <span id="year">2026</span></span>
+      </div>
+      <div class="foot-links">
+        <a href="https://www.youtube.com/@yourbdExplainer" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Write to me</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div class="clock" id="clock">00:00:00</div>
+
+  <script src="script.js?v=26"></script>
+</body>
+</html>
